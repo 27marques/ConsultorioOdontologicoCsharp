@@ -17,6 +17,8 @@ namespace Models
                 + $"\nSalario: R$ {this.Salario}"
                 + $"\nEspecialiade: {this.IdEspecialidade}";
         }
+        public Dentista() { }
+
         public Dentista(
             string Nome,
             string Cpf,
@@ -26,21 +28,7 @@ namespace Models
             string Registro,
             double Salario,
             int IdEspecialidade
-        ) : this(++ID, Nome, Cpf, Fone, Email, Senha, Registro, Salario, IdEspecialidade)
-        {
-        }
-
-        private Dentista(
-            int Id,
-            string Nome,
-            string Cpf,
-            string Fone,
-            string Email,
-            string Senha,
-            string Registro,
-            double Salario,
-            int IdEspecialidade
-        ) : base(Id, Nome, Cpf, Fone, Email, Senha)
+        ) : base(Nome, Cpf, Fone, Email, Senha)
         {
             this.Registro = Registro;
             this.Salario = Salario;

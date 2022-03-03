@@ -18,8 +18,9 @@ namespace Models
                 + $"\nEmail: {this.Email}";
         }
 
+        public Pessoa() { }
+        
         public Pessoa(
-            int Id,
             string Nome,
             string Cpf,
             string Fone,
@@ -27,7 +28,6 @@ namespace Models
             string Senha
         )
         {
-            this.Id = Id;
             this.Nome = Nome;
             this.Cpf = Cpf;
             this.Fone = Fone;

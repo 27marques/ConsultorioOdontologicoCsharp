@@ -1,34 +1,30 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Repository;
 
 namespace Models
 {
     public class Especialidade
     {
-        public static int ID = 0;
-        private static List<Especialidade> Especialidades = new List<Especialidade>();
         public int Id { get; set;}
+        [Required]
         public string Descricao { get; set;}
+        [Required]
         public string Detalhamento { get; set;}
     
         public Especialidade(
             string Descricao,
             string Detalhamento
-        ) : this(++ID, Descricao, Detalhamento)
-        {
-
-        }
-        private Especialidade(
-            int Id,
-            string Descricao,
-            string Detalhamento
         )
+        
         {
             this.Id = Id;
             this.Descricao = Descricao;
             this.Detalhamento = Detalhamento;
-
-            Especialidades.Add(this);
+            Context db = new Context();
+            db.Especialidades.Add(this);
+            db.SaveChanges();
         }
 
         public override string ToString()
@@ -54,12 +50,14 @@ namespace Models
 
         public static List<Especialidade> GetEspecialidade()
         {
-            return Especialidades;
+            Context db = new Context();
+            return (from Especialidade in db.Especialidades select Especialidade).ToList();
         }
 
         public static void RemoverEspecialidade(Especialidade especialidade)
         {
-            Especialidades.Remove(especialidade);
+            Context db = new Context();
+            db.Especialidades.Remove(especialidade);
         }
 
         public override int GetHashCode()

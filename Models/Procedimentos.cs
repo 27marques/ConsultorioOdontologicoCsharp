@@ -1,26 +1,19 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Repository;
 
 namespace Models
 {
     public class Procedimento
     {
-        public static int ID = 0;
-        private static List<Procedimento> Procedimentos = new List<Procedimento>();
         public int Id { get; set;}
+        [Required]
         public string Descricao { get; set;}
+        [Required]
         public double Preco { get; set;}
 
         public Procedimento(
-            string Descricao,
-            double Preco
-        ) : this(++ID, Descricao, Preco)
-        {
-
-        }
-
-        private Procedimento(
-            int Id,
             string Descricao,
             double Preco
         )
@@ -28,13 +21,15 @@ namespace Models
             this.Id = Id;
             this.Descricao = Descricao;
             this.Preco = Preco;
+            Context db = new Context();
+            db.Procedimentos.Add(this);
+            db.SaveChanges();
 
-            Procedimentos.Add(this);
         }
 
         internal static void Add(Procedimento procedimento)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         public override string ToString()
@@ -60,12 +55,14 @@ namespace Models
 
         public static List<Procedimento> GetProcedimento()
         {
-            return Procedimentos;
+            Context db = new Context();
+            return (from Procedimento in db.Procedimentos select Procedimento).ToList();
         }
 
         public static void RemoverProcedimento(Procedimento procedimento)
         {
-            Procedimentos.Remove(procedimento);
+            Context db = new Context();
+            db.Procedimentos.Remove(procedimento);
         }
 
         public override int GetHashCode()
