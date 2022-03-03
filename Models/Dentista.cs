@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Repository;
 
 namespace Models
 {
@@ -34,7 +35,9 @@ namespace Models
             this.Salario = Salario;
             this.IdEspecialidade = IdEspecialidade;
 
-            Dentistas.Add(this);
+            Context db = new Context();
+            db.Dentistas.Add(this);
+            db.SaveChanges();
         }
 
 
