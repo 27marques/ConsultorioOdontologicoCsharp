@@ -1,41 +1,33 @@
-using System;
-using Models;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Repository;
 
 namespace Models
 {
     public class AgendamentoProcedimento
     {
-        public static int ID = 0;
-        private static List<AgendamentoProcedimento> AgendamentoProcedimentos = new List<AgendamentoProcedimento>();
         public int Id { get; set; }
         public int IdProcedimento { get; set; }
         public Procedimento Procedimento { get; set; }
         public int IdAgendamento { get; set; }
         public Agendamento Agendamento { get; set; }
         
+        public AgendamentoProcedimento() { }
+
         public AgendamentoProcedimento(
-            int IdProcedimento,
-            int IdAgendamento
-        ) : this(++ID, IdProcedimento,IdAgendamento)
-        {
-
-        }
-
-        private AgendamentoProcedimento(
-            int Id,
             int IdProcedimento,
             int IdAgendamento
         )
         {
-            this.Id = ID;
             this.IdProcedimento = IdProcedimento;
             this.Procedimento = Procedimento.GetProcedimento().Find(Procedimento => Procedimento.Id == IdProcedimento);
             this.IdAgendamento = IdAgendamento;
             this.Agendamento = Agendamento.GetAgendamentos().Find(Agendamento => Agendamento.Id == IdAgendamento);
 
-            AgendamentoProcedimentos.Add(this);
+            Context db = new Context();
+            db.AgendamentoProcedimentos.Add(this);
+            db.SaveChanges();
         }
 
         public override string ToString()
@@ -61,18 +53,25 @@ namespace Models
 
         public static List<AgendamentoProcedimento> GetAgendamentoProcedimento()
         {
-            return AgendamentoProcedimentos;
+            Context db = new Context();
+            return (from AgendamentoProcedimento in db.AgendamentoProcedimentos select AgendamentoProcedimento).ToList();
         }
 
         public static IEnumerable<AgendamentoProcedimento> GetProcedimentosPorAgendamento(int IdAgendamento)
         {
-            return AgendamentoProcedimentos.FindAll(Procedimento => Procedimento.IdAgendamento == IdAgendamento);
+            Context db = new Context();
+            return (
+                from AgendamentoProcedimento in db.AgendamentoProcedimentos 
+                where AgendamentoProcedimento.IdAgendamento == IdAgendamento
+                select AgendamentoProcedimento
+            );
         }
 
         public static double GetTotalPorAgendamento(int IdAgendamento)
         {
+            Context db = new Context();
             return (
-                from AgendamentoProcedimento in AgendamentoProcedimentos 
+                from AgendamentoProcedimento in db.AgendamentoProcedimentos 
                 where AgendamentoProcedimento.IdAgendamento == IdAgendamento 
                 select AgendamentoProcedimento.Procedimento.Preco
             ).Sum();
@@ -80,7 +79,8 @@ namespace Models
 
         public static string ImprimirPorAgendamento(int IdAgendamento)
         {
-            IEnumerable<AgendamentoProcedimento> procedimentos = from AgendamentoProcedimento in AgendamentoProcedimentos 
+            Context db = new Context();
+            IEnumerable<AgendamentoProcedimento> procedimentos = from AgendamentoProcedimento in db.AgendamentoProcedimentos 
                 where AgendamentoProcedimento.IdAgendamento == IdAgendamento
                 select AgendamentoProcedimento;
 
@@ -104,7 +104,8 @@ namespace Models
             AgendamentoProcedimento agendamentoProcedimento
         )
         {
-            AgendamentoProcedimentos.Remove(agendamentoProcedimento);
+            Context db = new Context();
+            db.AgendamentoProcedimentos.Remove(agendamentoProcedimento);
         }
 
         public override int GetHashCode()

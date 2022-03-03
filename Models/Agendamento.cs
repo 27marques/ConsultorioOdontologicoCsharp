@@ -1,34 +1,29 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Repository;
+using System;
 
 namespace Models
 {
     public class Agendamento
     {
-        public static int ID = 0;
-        private static List<Agendamento> Agendamentos = new List<Agendamento>();
         public int Id { set; get; }
+        [Required]
         public int IdPaciente { set; get; }
         public Paciente Paciente { get; }
+        [Required]
         public int IdDentista { set; get; }
         public Dentista Dentista { get; }
+        [Required]
         public int IdSala { set; get; }
         public Sala Sala { get; }
         public DateTime Data { set; get; }
         public bool Confirmado { set; get; }
 
-        public Agendamento(
-            int IdPaciente,
-            int IdDentista,
-            int IdSala,
-            DateTime Data
-        ) : this(++ID, IdPaciente, IdDentista, IdSala, Data)
-        {
-            
-        }
+        public Agendamento() { }
 
-        private Agendamento(
-            int Id,
+        public Agendamento(
             int IdPaciente,
             int IdDentista,
             int IdSala,
@@ -44,7 +39,9 @@ namespace Models
             this.Sala = Sala.GetSalas().Find(Sala => Sala.Id == IdSala);
             this.Data = Data;
             
-            Agendamentos.Add(this);
+            Context db = new Context();
+            db.Agendamentos.Add(this);
+            db.SaveChanges();
         }
 
         public override string ToString()
@@ -74,14 +71,16 @@ namespace Models
         }
         public static List<Agendamento> GetAgendamentos()
         {
-            return Agendamentos;
+            Context db = new Context();
+            return (from Agendamento in db.Agendamentos select Agendamento).ToList();
         }
 
         public static void RemoverAgendamento(
             Agendamento agendamento
         )
         {
-            Agendamentos.Remove(agendamento);
+            Context db = new Context();
+            db.Agendamentos.Remove(agendamento);
         }
 
         public static void RemoverProcedimento (

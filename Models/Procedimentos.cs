@@ -10,9 +10,9 @@ namespace Models
         public int Id { get; set;}
         [Required]
         public string Descricao { get; set;}
-        [Required]
         public double Preco { get; set;}
 
+        public Procedimento() { }
         public Procedimento(
             string Descricao,
             double Preco

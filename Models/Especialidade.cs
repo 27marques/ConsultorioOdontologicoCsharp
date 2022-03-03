@@ -10,14 +10,13 @@ namespace Models
         public int Id { get; set;}
         [Required]
         public string Descricao { get; set;}
-        [Required]
         public string Detalhamento { get; set;}
     
+        public Especialidade() { }
         public Especialidade(
             string Descricao,
             string Detalhamento
         )
-        
         {
             this.Id = Id;
             this.Descricao = Descricao;

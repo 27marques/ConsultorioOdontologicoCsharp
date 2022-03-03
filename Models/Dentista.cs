@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using Repository;
 
 namespace Models
 {
     public class Dentista : Pessoa
     {
-        public static int ID = 0;
-        private static List<Dentista> Dentistas = new List<Dentista>();
+        [Required]
         public string Registro { set; get; }
         public double Salario { set; get; }
         public int IdEspecialidade { set; get; }
@@ -29,7 +30,7 @@ namespace Models
             string Registro,
             double Salario,
             int IdEspecialidade
-        ) : base(Nome, Cpf, Fone, Email, Senha)
+        ) 
         {
             this.Registro = Registro;
             this.Salario = Salario;
@@ -43,12 +44,14 @@ namespace Models
 
         public static List<Dentista> GetDentistas()
         {
-            return Dentistas;
+            Context db = new Context();
+            return (from Dentista in db.Dentistas select Dentista).ToList();
         }
 
         public static void RemoverDentista(Dentista dentista)
         {
-            Dentistas.Remove(dentista);
+            Context db = new Context();
+            db.Dentistas.Remove(dentista);
         }
 
     }

@@ -10,9 +10,9 @@ namespace Models
         public int Id { set; get; }
         [Required]
         public string Numero { set; get; }
-        [Required]
         public string Equipamentos { set; get; }
 
+        public Sala() { }
         public Sala(
             string Numero,
             string Equipamentos
