@@ -9,7 +9,7 @@ using Repository;
 namespace ConsultorioOdontologico.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220304010814_InitialDB")]
+    [Migration("20220304012546_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

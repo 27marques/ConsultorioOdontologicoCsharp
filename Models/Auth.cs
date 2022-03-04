@@ -26,7 +26,7 @@ namespace Models
             {
                 Dentista dentista = Dentista.GetDentistas()
                     .Find(Dentista => Dentista.Email == Email && BCrypt.Net.BCrypt.Verify(Senha, Dentista.Senha));
-                System.Console.WriteLine(dentista.Senha);
+                //System.Console.WriteLine(dentista.Senha);
                 if (dentista != null)
                 {
                     isLogeed = true;
