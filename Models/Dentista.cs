@@ -10,14 +10,14 @@ namespace Models
         [Required]
         public string Registro { set; get; }
         public double Salario { set; get; }
-        public int IdEspecialidade { set; get; }
+        public int EspecialidadeId { set; get; }
 
         public override string ToString()
         {
             return base.ToString()
                 + $"\nRegistro (CRO): {this.Registro}" 
                 + $"\nSalario: R$ {this.Salario}"
-                + $"\nEspecialiade: {this.IdEspecialidade}";
+                + $"\nEspecialiade: {this.EspecialidadeId}";
         }
         public Dentista() { }
 
@@ -29,12 +29,12 @@ namespace Models
             string Senha,
             string Registro,
             double Salario,
-            int IdEspecialidade
+            int EspecialidadeId
         ) 
         {
             this.Registro = Registro;
             this.Salario = Salario;
-            this.IdEspecialidade = IdEspecialidade;
+            this.EspecialidadeId = EspecialidadeId;
 
             Context db = new Context();
             db.Dentistas.Add(this);

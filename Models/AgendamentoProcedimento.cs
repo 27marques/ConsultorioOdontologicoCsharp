@@ -8,22 +8,22 @@ namespace Models
     public class AgendamentoProcedimento
     {
         public int Id { get; set; }
-        public int IdProcedimento { get; set; }
+        public int ProcedimentoId { get; set; }
         public Procedimento Procedimento { get; set; }
-        public int IdAgendamento { get; set; }
+        public int AgendamentoId { get; set; }
         public Agendamento Agendamento { get; set; }
         
         public AgendamentoProcedimento() { }
 
         public AgendamentoProcedimento(
-            int IdProcedimento,
-            int IdAgendamento
+            int ProcedimentoId,
+            int AgendamentoId
         )
         {
-            this.IdProcedimento = IdProcedimento;
-            this.Procedimento = Procedimento.GetProcedimento().Find(Procedimento => Procedimento.Id == IdProcedimento);
-            this.IdAgendamento = IdAgendamento;
-            this.Agendamento = Agendamento.GetAgendamentos().Find(Agendamento => Agendamento.Id == IdAgendamento);
+            this.ProcedimentoId = ProcedimentoId;
+            this.Procedimento = Procedimento.GetProcedimento().Find(Procedimento => Procedimento.Id == ProcedimentoId);
+            this.AgendamentoId = AgendamentoId;
+            this.Agendamento = Agendamento.GetAgendamentos().Find(Agendamento => Agendamento.Id == AgendamentoId);
 
             Context db = new Context();
             db.AgendamentoProcedimentos.Add(this);
@@ -33,8 +33,8 @@ namespace Models
         public override string ToString()
         {
             return $"ID: {this.Id}"
-                + $"\nProcedimento: {this.IdProcedimento}"
-                + $"\nAgendamento: {this.IdAgendamento}";
+                + $"\nProcedimento: {this.ProcedimentoId}"
+                + $"\nAgendamento: {this.AgendamentoId}";
         }
 
         public override bool Equals(object obj)
@@ -57,31 +57,31 @@ namespace Models
             return (from AgendamentoProcedimento in db.AgendamentoProcedimentos select AgendamentoProcedimento).ToList();
         }
 
-        public static IEnumerable<AgendamentoProcedimento> GetProcedimentosPorAgendamento(int IdAgendamento)
+        public static IEnumerable<AgendamentoProcedimento> GetProcedimentosPorAgendamento(int AgendamentoId)
         {
             Context db = new Context();
             return (
                 from AgendamentoProcedimento in db.AgendamentoProcedimentos 
-                where AgendamentoProcedimento.IdAgendamento == IdAgendamento
+                where AgendamentoProcedimento.AgendamentoId == AgendamentoId
                 select AgendamentoProcedimento
             );
         }
 
-        public static double GetTotalPorAgendamento(int IdAgendamento)
+        public static double GetTotalPorAgendamento(int AgendamentoId)
         {
             Context db = new Context();
             return (
                 from AgendamentoProcedimento in db.AgendamentoProcedimentos 
-                where AgendamentoProcedimento.IdAgendamento == IdAgendamento 
+                where AgendamentoProcedimento.AgendamentoId == AgendamentoId 
                 select AgendamentoProcedimento.Procedimento.Preco
             ).Sum();
         }
 
-        public static string ImprimirPorAgendamento(int IdAgendamento)
+        public static string ImprimirPorAgendamento(int AgendamentoId)
         {
             Context db = new Context();
             IEnumerable<AgendamentoProcedimento> procedimentos = from AgendamentoProcedimento in db.AgendamentoProcedimentos 
-                where AgendamentoProcedimento.IdAgendamento == IdAgendamento
+                where AgendamentoProcedimento.AgendamentoId == AgendamentoId
                 select AgendamentoProcedimento;
 
             

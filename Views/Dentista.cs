@@ -9,7 +9,7 @@ namespace Views
         public static void InserirDentista()
         {
 
-            int IdEspecialidade;
+            int EspecialidadeId;
 
             double Salario = 0;
             Console.WriteLine("Digite o Nome do Dentista: ");
@@ -37,7 +37,7 @@ namespace Views
 
             try
             {
-                IdEspecialidade = Convert.ToInt32(Console.ReadLine());
+                EspecialidadeId = Convert.ToInt32(Console.ReadLine());
             }
             catch
             {
@@ -52,7 +52,7 @@ namespace Views
                 Senha,
                 Registro,
                 Salario,
-                IdEspecialidade
+                EspecialidadeId
             );
         }
 

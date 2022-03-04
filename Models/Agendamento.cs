@@ -10,13 +10,13 @@ namespace Models
     {
         public int Id { set; get; }
         [Required]
-        public int IdPaciente { set; get; }
+        public int PacienteId { set; get; }
         public Paciente Paciente { get; }
         [Required]
-        public int IdDentista { set; get; }
+        public int DentistaId { set; get; }
         public Dentista Dentista { get; }
         [Required]
-        public int IdSala { set; get; }
+        public int SalaId { set; get; }
         public Sala Sala { get; }
         public DateTime Data { set; get; }
         public bool Confirmado { set; get; }
@@ -24,19 +24,19 @@ namespace Models
         public Agendamento() { }
 
         public Agendamento(
-            int IdPaciente,
-            int IdDentista,
-            int IdSala,
+            int PacienteId,
+            int DentistaId,
+            int SalaId,
             DateTime Data
         )
         {
             this.Id = Id;
-            this.IdPaciente = IdPaciente;
-            this.Paciente = Paciente.GetPacientes().Find(Paciente => Paciente.Id == IdPaciente);
-            this.IdDentista = IdDentista;
-            this.Dentista = Dentista.GetDentistas().Find(Dentista => Dentista.Id == IdDentista);
-            this.IdSala = IdSala;
-            this.Sala = Sala.GetSalas().Find(Sala => Sala.Id == IdSala);
+            this.PacienteId = PacienteId;
+            this.Paciente = Paciente.GetPacientes().Find(Paciente => Paciente.Id == PacienteId);
+            this.DentistaId = DentistaId;
+            this.Dentista = Dentista.GetDentistas().Find(Dentista => Dentista.Id == DentistaId);
+            this.SalaId = SalaId;
+            this.Sala = Sala.GetSalas().Find(Sala => Sala.Id == SalaId);
             this.Data = Data;
             
             Context db = new Context();
